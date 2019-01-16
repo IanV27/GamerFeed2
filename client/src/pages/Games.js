@@ -7,31 +7,40 @@ import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
 
-class Books extends Component {
+class Games extends Component {
   state = {
-    books: [],
-    title: "",
-    author: "",
-    synopsis: ""
+    search: [],
+    games: [],
+    reviews: [],
   };
 
   componentDidMount() {
-    this.loadBooks();
+    this.loadGames();
   }
 
-  loadBooks = () => {
-    API.getBooks()
+  loadGames = () => {
+    API.getGames()
       .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-      )
-      .catch(err => console.log(err));
+        this.setState({ games: res.data.results })
+    )
+    .catch(err => console.log(err));
+    API.getRating()
+      .then(res =>
+        this.setState({ rating: res.data, results: {} })
+    )
+    .catch(err => console.log(err));
+    API.getReviews()
+    .then(res =>
+      this.setState({ reviews: res.data, results: [] })
+    )
+    .catch(err => console.log(err));
   };
 
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
-  };
+  // deleteBook = id => {
+  //   API.deleteBook(id)
+  //     .then(res => this.loadBooks())
+  //     .catch(err => console.log(err));
+  // };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -42,13 +51,10 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
-      })
-        .then(res => this.loadBooks())
+    if (this.state.title) {
+      API.getSearch(this.state.title)
+        .then(res => this.setState({ games: res.data.results })
+        )
         .catch(err => console.log(err));
     }
   };
@@ -59,7 +65,7 @@ class Books extends Component {
         <Row>
           <Col size="md-6">
             <Jumbotron>
-              <h1>What Books Should I Read?</h1>
+              <h1>What Games Should I Search?</h1>
             </Jumbotron>
             <form>
               <Input
@@ -68,20 +74,20 @@ class Books extends Component {
                 name="title"
                 placeholder="Title (required)"
               />
-              <Input
+              {/* <Input
                 value={this.state.author}
                 onChange={this.handleInputChange}
                 name="author"
                 placeholder="Author (required)"
-              />
-              <TextArea
+              /> */}
+              {/* <TextArea
                 value={this.state.synopsis}
                 onChange={this.handleInputChange}
                 name="synopsis"
                 placeholder="Synopsis (Optional)"
-              />
+              /> */}
               <FormBtn
-                disabled={!(this.state.author && this.state.title)}
+                // disabled={!(this.state.author && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
                 Submit Book
@@ -92,21 +98,21 @@ class Books extends Component {
             <Jumbotron>
               <h1>Books On My List</h1>
             </Jumbotron>
-            {this.state.books.length ? (
+            {this.state.games.length ? (
               <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
+                {this.state.games.map(game => (
+                  // <ListItem key={book._id}>
+                  //   <Link to={"/books/" + book._id}>
                       <strong>
-                        {book.title} by {book.author}
+                        {game.name}
                       </strong>
-                    </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
-                  </ListItem>
+                    // </Link>
+                  //   <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                  // </ListItem>
                 ))}
               </List>
             ) : (
-              <h3>No Results to Display</h3>
+              <h3>No Games to Display</h3>
             )}
           </Col>
         </Row>
@@ -115,4 +121,4 @@ class Books extends Component {
   }
 }
 
-export default Books;
+export default Games;
