@@ -2,6 +2,7 @@ var express = require("express");
 var mysql = require("mysql");
 var bodyParser = require("body-parser");
 var db = require('./models/index.js');
+require('./config/passport');
 
 console.log(db.User);
 db.User.findAll().then(users => {
@@ -12,6 +13,8 @@ db.User.findAll().then(users => {
 var PORT = process.env.PORT || 8080;
 
 var app = express();
+
+app.use(require('./routes'));
 
 // Start our server so that it can begin listening to client requests.
 app.listen(PORT, function() {
