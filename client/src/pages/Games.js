@@ -81,7 +81,7 @@ getGameRatings = guid => {
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
-              <h1>Books On My List</h1>
+              <h1>Games Rating</h1>
               <h2>{this.state.gameReview}</h2>
             </Jumbotron>
             {this.state.games.length && !this.state.isComingFromSearch ? (
