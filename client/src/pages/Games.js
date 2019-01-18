@@ -14,6 +14,7 @@ class Games extends Component {
     games: [],
     reviews: [],
     gameReview: "",
+    isComingFromSearch: false
   };
 
   componentDidMount() {
@@ -28,23 +29,8 @@ class Games extends Component {
       }
     )
     .catch(err => console.log(err));
-    API.getRating()
-      .then(res =>
-        this.setState({ rating: res.data, results: {} })
-    )
-    .catch(err => console.log(err));
-  //   API.getReviews()
-  //   .then(res =>
-  //     this.setState({ reviews: res.data, results: [] })
-  //   )
-  //   .catch(err => console.log(err));
-  };
 
-  // deleteBook = id => {
-  //   API.deleteBook(id)
-  //     .then(res => this.loadBooks())
-  //     .catch(err => console.log(err));
-  // };
+    };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -57,8 +43,7 @@ class Games extends Component {
     event.preventDefault();
     if (this.state.title) {
       API.getSearch(this.state.title)
-        .then(res => this.setState({ games: res.data.results })
-        )
+        .then(res => this.setState({ games: res.data.results, isComingFromSearch: true }))
         .catch(err => console.log(err));
     }
   };
@@ -66,8 +51,7 @@ class Games extends Component {
 getGameRatings = guid => {
   if (guid) {
     API.getGameRating(guid)
-      .then(res => this.setState({ gameReview: res.data.number_of_total_results }))
-      
+      .then(res => this.setState({ gameReview: res.data.results.score }))
       .catch(err => console.log(err));
   }
 };
@@ -87,20 +71,8 @@ getGameRatings = guid => {
                 name="title"
                 placeholder="Game Title (required)"
               />
-              {/* <Input
-                value={this.state.author}
-                onChange={this.handleInputChange}
-                name="author"
-                placeholder="Author (required)"
-              /> */}
-              {/* <TextArea
-                value={this.state.synopsis}
-                onChange={this.handleInputChange}
-                name="synopsis"
-                placeholder="Synopsis (Optional)"
-              /> */}
+              
               <FormBtn
-                // disabled={!(this.state.author && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
                 Submit
@@ -110,22 +82,24 @@ getGameRatings = guid => {
           <Col size="md-6 sm-12">
             <Jumbotron>
               <h1>Books On My List</h1>
+              <h2>{this.state.gameReview}</h2>
             </Jumbotron>
-            {this.state.games.length ? (
+            {this.state.games.length && !this.state.isComingFromSearch ? (
               <List>
                 {this.state.games.map(game => (
-                  // <ListItem key={book._id}>
-                  //   <Link to={"/books/" + book._id}>
                       <strong>
-                        <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.name} {this.state.gameReview}</li>
+                        <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.game.name} </li>
                       </strong>
-                    // </Link>
-                  //   <DeleteBtn onClick={() => this.deleteBook(book._id)} />
-                  // </ListItem>
                 ))}
               </List>
             ) : (
-              <h3>No Games to Display</h3>
+              <List>
+                {this.state.games.map(game => (
+                      <strong>
+                        <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.name} </li>
+                      </strong>
+                ))}
+              </List>
             )}
           </Col>
         </Row>

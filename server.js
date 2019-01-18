@@ -13,8 +13,6 @@ var PORT = process.env.PORT || 8080;
 
 var app = express();
 
-app.use(require('./routes'));
-
 // Start our server so that it can begin listening to client requests.
 app.listen(PORT, function() {
   // Log (server-side) when our server has started
