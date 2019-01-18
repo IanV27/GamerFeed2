@@ -22,9 +22,9 @@ export default {
   //   ("https://www.giantbomb.com/api/review/[guid]/?api_key=4b4ba55b0118821989326754d56880f35e4178e0&format=json");
   // },
   // Gets all game reviews
-  getReviews: function() {
+  getGameRating: function(guid) {
     return axios.get
-    ("https://www.giantbomb.com/api/reviews/?api_key=4b4ba55b0118821989326754d56880f35e4178e0&format=json");
+    ("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/review/"+guid+"/?api_key=4b4ba55b0118821989326754d56880f35e4178e0&format=json");
   } 
 };
 

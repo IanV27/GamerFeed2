@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
+import { get } from "http";
 
 class Games extends Component {
   state = {
     search: [],
     games: [],
     reviews: [],
+    gameReview: "",
   };
 
   componentDidMount() {
@@ -20,8 +22,10 @@ class Games extends Component {
 
   loadGames = () => {
     API.getGames()
-      .then(res =>
+      .then(res => {
+        // console.log('res.data.results >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',res.data.results[0].guid);
         this.setState({ games: res.data.results })
+      }
     )
     .catch(err => console.log(err));
     API.getRating()
@@ -29,11 +33,11 @@ class Games extends Component {
         this.setState({ rating: res.data, results: {} })
     )
     .catch(err => console.log(err));
-    API.getReviews()
-    .then(res =>
-      this.setState({ reviews: res.data, results: [] })
-    )
-    .catch(err => console.log(err));
+  //   API.getReviews()
+  //   .then(res =>
+  //     this.setState({ reviews: res.data, results: [] })
+  //   )
+  //   .catch(err => console.log(err));
   };
 
   // deleteBook = id => {
@@ -58,6 +62,15 @@ class Games extends Component {
         .catch(err => console.log(err));
     }
   };
+  
+getGameRatings = guid => {
+  if (guid) {
+    API.getGameRating(guid)
+      .then(res => this.setState({ gameReview: res.data.number_of_total_results }))
+      
+      .catch(err => console.log(err));
+  }
+};
 
   render() {
     return (
@@ -72,7 +85,7 @@ class Games extends Component {
                 value={this.state.title}
                 onChange={this.handleInputChange}
                 name="title"
-                placeholder="Title (required)"
+                placeholder="Game Title (required)"
               />
               {/* <Input
                 value={this.state.author}
@@ -90,7 +103,7 @@ class Games extends Component {
                 // disabled={!(this.state.author && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
-                Submit Book
+                Submit
               </FormBtn>
             </form>
           </Col>
@@ -104,7 +117,7 @@ class Games extends Component {
                   // <ListItem key={book._id}>
                   //   <Link to={"/books/" + book._id}>
                       <strong>
-                        {game.name}
+                        <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.name} {this.state.gameReview}</li>
                       </strong>
                     // </Link>
                   //   <DeleteBtn onClick={() => this.deleteBook(book._id)} />
