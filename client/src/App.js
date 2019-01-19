@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Games from "./pages/Games";
+import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
@@ -13,6 +14,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Games} />
           <Route exact path="/games" component={Games} />
+          <Route exact path="/signup" component={Signup} />
           <Route component={NoMatch} />
         </Switch>
       </div>
