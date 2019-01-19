@@ -10,12 +10,13 @@ import { get } from "http";
 
 class Games extends Component {
   state = {
-    // search: [],
+    search: [],
     games: [],
-    // reviews: [],
+    reviews: [],
     gameReview: "",
     isComingFromSearch: false,
-    isComingFromYouTubeVideo: false,
+    gameVideo: "",
+    isComingFromVideo: false,
     
   };
 
@@ -27,7 +28,11 @@ class Games extends Component {
     API.getGames()
       .then(res => {
         // console.log('res.data.results >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',res.data.results[0].guid);
-        this.setState({ games: res.data.results })
+        this.setState({ 
+          games: res.data.results,
+          isComingFromVideo: false,
+          isComingFromSearch: false,
+         })
       }
     )
     .catch(err => console.log(err));
@@ -58,7 +63,68 @@ getGameRatings = guid => {
   }
 };
 
+getGameVideos = () => {
+  API.getYouTubeVideos()
+  .then(res => {
+    this.setState({ games: res.data.results, isComingFromVideo: true })
+  }
+)
+.catch(err => console.log(err));
+
+};
+
+getGameVideo = (guid) => {
+  if (guid) {
+  API.getYouTubeVideo(guid)
+  .then(res => {
+    this.setState({ gameVideo: res.data.results.youtube_id, isComingFromVideo: true })
+  }
+)
+.catch(err => console.log(err));
+  }
+};
+
+
   render() {
+    let html=""; 
+    
+    let html_video= "";
+
+    
+    if(this.state.games.length && !this.state.isComingFromSearch && !this.state.isComingFromVideo)  { 
+      html=
+      <List>
+        {this.state.games.map(game => (
+              <strong>
+                <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.game.name} </li>
+              </strong>
+        ))}
+      </List>;
+    } else if(this.state.isComingFromSearch) {
+      html=
+      <List>
+        {this.state.games.map(game => (
+              <strong>
+                <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.name} </li>
+              </strong>
+        ))}
+      </List>;
+    } else if(this.state.isComingFromVideo) {
+      html=
+      <List>
+        {this.state.games.map(game => (
+              <strong>
+                <li data-id={game.guid} onClick={() => this.getGameVideo(game.guid)}>{game.name} </li>
+              </strong>
+        ))}
+      </List>;
+      if (this.state.gameVideo) {
+        html_video=
+        <h2><a href={`https://www.youtube.com/watch?v=${this.state.gameVideo}`} >YouTube video</a></h2>;
+       }
+
+    }
+
     return (
       <Container fluid>
         <Row>
@@ -77,33 +143,32 @@ getGameRatings = guid => {
               <FormBtn
                 onClick={this.handleFormSubmit}
               >
-                Submit
+                Search
               </FormBtn>
+
             </form>
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
               <h1>Game Rating 1-5</h1>
               
-              <h2>{this.state.gameReview}</h2>
+              <h2>Rating: {this.state.gameReview}</h2>
+            {html_video}
             </Jumbotron>
-            {this.state.games.length && !this.state.isComingFromSearch ? (
-              <List>
-                {this.state.games.map(game => (
-                      <strong>
-                        <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.game.name} </li>
-                      </strong>
-                ))}
-              </List>
-            ) : (
-              <List>
-                {this.state.games.map(game => (
-                      <strong>
-                        <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.name} </li>
-                      </strong>
-                ))}
-              </List>
-            )}
+
+            <FormBtn
+                onClick={this.getGameVideos}
+              >
+                Videos
+              </FormBtn>
+
+            <FormBtn
+                onClick={this.loadGames}
+              >
+                Ratings
+              </FormBtn>
+
+{html}
           </Col>
         </Row>
       </Container>
