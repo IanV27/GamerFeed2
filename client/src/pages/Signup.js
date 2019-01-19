@@ -41,7 +41,7 @@ class Signup extends Component {
                 value={this.state.firstName}
                 onChange={this.handleInputChange}
                 name="firstName"
-                placeholder="Game Title (required)"
+                placeholder="First Name"
               />
               
               <FormBtn
