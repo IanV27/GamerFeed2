@@ -13,10 +13,10 @@ export default {
   },
 
   // Gets all ratings
-  getRating: function() {
-    return axios.get
-    ("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/game_rating/3065-24/?api_key=4b4ba55b0118821989326754d56880f35e4178e0&format=json");
-  },
+  // getRating: function() {
+  //   return axios.get
+  //   ("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/game_rating/3065-24/?api_key=4b4ba55b0118821989326754d56880f35e4178e0&format=json");
+  // },
   // Gets all game review 
   // getReview: function() {
   //   return axios.get
@@ -26,6 +26,15 @@ export default {
   getGameRating: function(guid) {
     return axios.get
     ("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/review/"+guid+"/?api_key=4b4ba55b0118821989326754d56880f35e4178e0&format=json");
-  } 
+  },
+  
+  getYouTubeVideo: function(youtube_id) {
+    return axios.get
+    ("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/videos/"+youtube_id+"/?format=json&api_key=4b4ba55b0118821989326754d56880f35e4178e0")
+  },
+  getReleases: function(id) {
+    return axios.get
+    ("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/releases/"+id+"/?api_key=4b4ba55b0118821989326754d56880f35e4178e0&format=json");
+  }
 };
 

@@ -10,11 +10,13 @@ import { get } from "http";
 
 class Games extends Component {
   state = {
-    search: [],
+    // search: [],
     games: [],
-    reviews: [],
+    // reviews: [],
     gameReview: "",
-    isComingFromSearch: false
+    isComingFromSearch: false,
+    isComingFromYouTubeVideo: false,
+    
   };
 
   componentDidMount() {
@@ -81,7 +83,8 @@ getGameRatings = guid => {
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
-              <h1>Games Rating</h1>
+              <h1>Game Rating 1-5</h1>
+              
               <h2>{this.state.gameReview}</h2>
             </Jumbotron>
             {this.state.games.length && !this.state.isComingFromSearch ? (
