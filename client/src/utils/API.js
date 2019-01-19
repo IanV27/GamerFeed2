@@ -8,7 +8,8 @@ export default {
   },
   getGames: function() {
     return axios.get
-    ("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/games/?api_key=4b4ba55b0118821989326754d56880f35e4178e0&format=json");
+    ("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/reviews/?format=json&api_key=4b4ba55b0118821989326754d56880f35e4178e0");
+    // ("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/games/?api_key=4b4ba55b0118821989326754d56880f35e4178e0&format=json");
   },
 
   // Gets all ratings
