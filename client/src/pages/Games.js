@@ -23,7 +23,7 @@ class Games extends Component {
   componentDidMount() {
     this.loadGames();
   }
-
+// Calls on API to get the list of Games
   loadGames = () => {
     API.getGames()
       .then(res => {
@@ -46,6 +46,7 @@ class Games extends Component {
     });
   };
 
+// Calls on API to search any game on the database
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.title) {
@@ -55,6 +56,7 @@ class Games extends Component {
     }
   };
   
+// Calls on API to get a list of games with a Rating from 1-5
 getGameRatings = guid => {
   if (guid) {
     API.getGameRating(guid)
@@ -63,6 +65,7 @@ getGameRatings = guid => {
   }
 };
 
+// Calls on API to get a list of games with a YouTube video
 getGameVideos = () => {
   API.getYouTubeVideos()
   .then(res => {
@@ -73,6 +76,7 @@ getGameVideos = () => {
 
 };
 
+// Calls on API to pull one video from the list of games that have videos
 getGameVideo = (guid) => {
   if (guid) {
   API.getYouTubeVideo(guid)
@@ -124,7 +128,7 @@ getGameVideo = (guid) => {
        }
 
     }
-
+// Returns Search, Videos and Description of Game
     return (
       <Container fluid>
         <Row>
