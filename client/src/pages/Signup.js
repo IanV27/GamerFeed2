@@ -8,7 +8,11 @@ import axios from "axios";
 
 class Signup extends Component {
   state = {
-    firstName: ''
+    signUp: [],
+    firstName: '',
+    lastName: '',
+    userName: '',
+    email: ''
   };
 
   handleInputChange = event => {
@@ -19,7 +23,10 @@ class Signup extends Component {
     event.preventDefault();
     // get our form data out of state
     const newUser = {
-      firstName: this.state.firstName
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      userName: this.state.userName,
+      email: this.state.email
     };
     console.log(newUser)
     axios.post('/api/users', newUser)
@@ -37,11 +44,31 @@ class Signup extends Component {
         <Row>
           <Col size="md-6">
             <form>
+              <h1>Welcome to GamerFeed!</h1>
+              <h1>Please sign up</h1>
               <Input
                 value={this.state.firstName}
                 onChange={this.handleInputChange}
                 name="firstName"
                 placeholder="First Name"
+              />
+              <Input
+                value={this.state.lastName}
+                onChange={this.handleInputChange}
+                name="lastName"
+                placeholder="Last Name"
+              />
+              <Input
+                value={this.state.userName}
+                onChange={this.handleInputChange}
+                name="userName"
+                placeholder="User Name"
+              />
+              <Input
+                value={this.state.firstName}
+                onChange={this.handleInputChange}
+                name="email"
+                placeholder="e-mail"
               />
               
               <FormBtn
