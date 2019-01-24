@@ -7,8 +7,13 @@ import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
 import { get } from "http";
+import YouTube from 'react-youtube';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
+
+let gameDescription = "";
 class Games extends Component {
+  
   state = {
     search: [],
     games: [],
@@ -17,6 +22,7 @@ class Games extends Component {
     isComingFromSearch: false,
     gameVideo: "",
     isComingFromVideo: false,
+    description: "",
     
   };
 
@@ -53,6 +59,14 @@ class Games extends Component {
       API.getSearch(this.state.title)
         .then(res => this.setState({ games: res.data.results, isComingFromSearch: true }))
         .catch(err => console.log(err));
+    }
+  };
+
+
+  setDescription = description => {
+    if (description) {
+        this.setState({ description: description });
+        gameDescription=description;
     }
   };
   
@@ -109,7 +123,7 @@ getGameVideo = (guid) => {
       <List>
         {this.state.games.map(game => (
               <strong>
-                <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.name} </li>
+                <li data-id={game.guid} onClick={() => this.setDescription(game.description)}>{game.name} </li>
               </strong>
         ))}
       </List>;
@@ -124,7 +138,8 @@ getGameVideo = (guid) => {
       </List>;
       if (this.state.gameVideo) {
         html_video=
-        <h2><a href={`https://www.youtube.com/watch?v=${this.state.gameVideo}`} >YouTube video</a></h2>;
+        // <h2><a href={`https://www.youtube.com/watch?v=${this.state.gameVideo}`} >YouTube video</a></h2>;
+        <iframe width="560" height="315" src={`https://www.youtube.com/embed/${this.state.gameVideo}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
        }
 
     }
@@ -151,6 +166,9 @@ getGameVideo = (guid) => {
               </FormBtn>
 
             </form>
+            <div>
+            <h2>Description: { ReactHtmlParser(this.state.description) }</h2>
+            </div>
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
@@ -159,7 +177,7 @@ getGameVideo = (guid) => {
               <h2>Rating: {this.state.gameReview}</h2>
             {html_video}
             </Jumbotron>
-
+            
             <FormBtn
                 onClick={this.getGameVideos}
               >
