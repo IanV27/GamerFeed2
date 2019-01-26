@@ -11,6 +11,7 @@ $secondary-color: blue;
     color: red;
     font-size: 26px;
 }
+
 .edtesting {
     border: 1px $yellow solid;
 }
@@ -52,7 +53,31 @@ $secondary-color: blue;
 .list-overflow-container li:last-child {
     border-bottom: none;
 }
+
 .jumbotron {
     color: black;
     width: 100%;
+}
+
+#root {
+    background-color: darkred;
+}
+
+.col-md-6 {
+    background-color: #2A878C;
+    max-width: 40%;
+}
+
+@media (min-width: 768px) {
+    .col-md-6 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 40%;
+    }
+
+}
+ul.list-group {
+    background-color: green;
+    
 }

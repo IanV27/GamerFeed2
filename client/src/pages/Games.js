@@ -146,8 +146,8 @@ getGameVideo = (guid) => {
 // Returns Search, Videos and Description of Game
     return (
       <Container fluid>
-        <Row>
-          <Col size="md-6">
+        <div className="d-flex justify-content-center">
+          <div className="col-md-6">
             <Jumbotron>
               <h1>What Games Should I Search?</h1>
             </Jumbotron>
@@ -168,14 +168,15 @@ getGameVideo = (guid) => {
             </form>
             <div>
             <h2>Description: { ReactHtmlParser(this.state.description) }</h2>
+            {html_video}
             </div>
-          </Col>
-          <Col size="md-6 sm-12">
+          </div>
+          <div className="col-md-6 col-sm-12">
             <Jumbotron>
               <h1>Game Rating 1-5</h1>
               
               <h2>Rating: {this.state.gameReview}</h2>
-            {html_video}
+            
             </Jumbotron>
             
             <FormBtn
@@ -191,8 +192,8 @@ getGameVideo = (guid) => {
               </FormBtn>
 
 {html}
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Container>
     );
   }
