@@ -5,10 +5,9 @@ import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
 import { get } from "http";
 import axios from "axios";
-import { Route, Redirect } from 'react-router';
+import { Route, Redirect } from 'react';
 
-
-class Signup extends Component {
+class Login extends Component {
   state = {
     signUp: [],
     firstName: '',
@@ -16,7 +15,6 @@ class Signup extends Component {
     Email: '',
     userName: '',
     password: '',
-    isRegistered: false
   };
 
   handleInputChange = event => {
@@ -36,10 +34,7 @@ class Signup extends Component {
     console.log(newUser)
     axios.post('/api/users', newUser)
       .then((result) => {
-        console.log(result);
-        this.setState({ 
-          isRegistered: true
-         });
+        console.log(result)
         //access the results here....
       });
   };
@@ -47,7 +42,7 @@ class Signup extends Component {
   render() {
     const { firstName } = this.state;
     if (this.state.isRegistered === true) {
-      return <Redirect to='/login' />
+      return <Redirect to='/games' />
     }
 
     return (
@@ -56,7 +51,7 @@ class Signup extends Component {
           <Col size="md-6">
             <form>
               <h1>Welcome to GamerFeed!</h1>
-              <h1>Please sign up</h1>
+              <h1>This is our login page</h1>
               <Input
                 value={this.state.firstName}
                 onChange={this.handleInputChange}
@@ -98,7 +93,7 @@ class Signup extends Component {
         </Row>
       </Container>
     );
-  }
+  } 
 }
 
-export default Signup;
+export default Login;
