@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Banner from "./pages/Banner";
 import Games from "./pages/Games";
 import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
@@ -8,6 +9,9 @@ import Nav from "./components/Nav";
 
 function App() {
   return (
+    /* jshint ignore:start */
+    <div>
+    <Banner></Banner>
     <Router>
       <div>
         <Nav />
@@ -19,6 +23,8 @@ function App() {
         </Switch>
       </div>
     </Router>
+    </div>
+    /* jshint ignore:end */
   );
 }
 
