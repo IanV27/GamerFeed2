@@ -150,7 +150,7 @@ getGameVideo = (guid) => {
         <div className="d-flex justify-content-center">
           <div className="col-md-6">
             <Jumbotron>
-              <h1>What Games Should I Search?</h1>
+              <h1>What Games Should I Search? Type it below.</h1>
             </Jumbotron>
             <form>
               <Input
