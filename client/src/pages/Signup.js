@@ -47,7 +47,7 @@ class Signup extends Component {
   render() {
     const { firstName } = this.state;
     if (this.state.isRegistered === true) {
-      return <Redirect to='/login' />
+      return <Redirect to='/games' />
     }
 
     return (
@@ -84,6 +84,7 @@ class Signup extends Component {
               <Input
                 value={this.state.password}
                 onChange={this.handleInputChange}
+                type="password"
                 name="password"
                 placeholder="Password"
               />
