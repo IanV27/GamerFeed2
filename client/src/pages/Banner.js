@@ -14,7 +14,7 @@ class Banner extends Component {
     render(){
     return (
       <Container fluid>
-      <div class="banner"> This is My Banner </div>
+      <div class="banner"></div>
       </Container>
     );
 }

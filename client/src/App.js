@@ -12,7 +12,7 @@ function App() {
   return (
     /* jshint ignore:start */
     <div>
-    <Banner></Banner>
+    <Banner>A banner</Banner>
     <Router>
       <div>
         <Nav />

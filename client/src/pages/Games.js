@@ -110,32 +110,33 @@ getGameVideo = (guid) => {
 
     
     if(this.state.games.length && !this.state.isComingFromSearch && !this.state.isComingFromVideo)  { 
-      html=
+      html=<div className="results">
       <List>
         {this.state.games.map(game => (
               <strong>
                 <li data-id={game.guid} onClick={() => this.getGameRatings(game.guid)}>{game.game.name} </li>
               </strong>
         ))}
-      </List>;
+      </List></div>;
     } else if(this.state.isComingFromSearch) {
-      html=
+      html=<div className="results">
       <List>
         {this.state.games.map(game => (
               <strong>
                 <li data-id={game.guid} onClick={() => this.setDescription(game.description)}>{game.name} </li>
               </strong>
         ))}
-      </List>;
+      </List></div>;
     } else if(this.state.isComingFromVideo) {
-      html=
+      html=<div className="results">
       <List>
         {this.state.games.map(game => (
               <strong>
                 <li data-id={game.guid} onClick={() => this.getGameVideo(game.guid)}>{game.name} </li>
               </strong>
         ))}
-      </List>;
+      </List></div>;
+      
       if (this.state.gameVideo) {
         html_video=
         // <h2><a href={`https://www.youtube.com/watch?v=${this.state.gameVideo}`} >YouTube video</a></h2>;
@@ -166,7 +167,7 @@ getGameVideo = (guid) => {
               </FormBtn>
 
             </form>
-            <div>
+            <div className="description">
             <h2>Description: { ReactHtmlParser(this.state.description) }</h2>
             {html_video}
             </div>
