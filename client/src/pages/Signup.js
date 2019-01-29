@@ -52,10 +52,10 @@ class Signup extends Component {
 
     return (
       <Container fluid>
-        <Row>
+        <div className="d-flex justify-content-center">
           <Col size="md-6">
             <form>
-              <h1>Welcome to GamerFeed!</h1>
+              <h1 class="signup-text">Welcome to GamerFeed!</h1>
               <h1>Please sign up</h1>
               <Input
                 value={this.state.firstName}
@@ -96,7 +96,7 @@ class Signup extends Component {
               </FormBtn>
             </form>
           </Col>
-        </Row>
+        </div>
       </Container>
     );
   }
