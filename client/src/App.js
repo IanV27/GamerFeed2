@@ -15,7 +15,7 @@ function App() {
     <Banner>A banner</Banner>
     <Router>
       <div>
-        <Nav />
+        {/* <Nav /> */}
         <Switch>
           <Route exact path="/" component={Games} />
           <Route exact path="/games" component={Games} />
