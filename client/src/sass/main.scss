@@ -101,7 +101,13 @@ ul.list-group {
 .container-fluid {
     padding-right: 0;
     padding-left: 0;
+    max-height: 100%,
 }
 .signup-text {
     color: white;
+}
+
+.justify-content-center {
+    color: gold;
+    text-align: center;
 }
