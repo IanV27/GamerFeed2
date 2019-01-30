@@ -16,14 +16,18 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-// app.use(express.json());
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
 // Add routes, both API and view
 app.use(routes);
 
-// Start our server so that it can begin listening to client requests.
-app.listen(PORT, function() {
-  // Log (server-side) when our server has started
-  console.log("Server listening on: http://localhost:" + PORT);
+
+db.sequelize.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log("App now listening on port:", PORT);
+  });
 });
 
